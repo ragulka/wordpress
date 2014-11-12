@@ -537,11 +537,26 @@ class WP_List_Table {
 	 * @access protected
 	 */
 	protected function view_switcher( $current_mode ) {
+		/**
+		 * Filter the list of available view modes.
+		 *
+		 * The dynamic portion of the hook name, $this->screen->id, refers
+		 * to the ID of the current screen, usually a string.
+		 *
+		 * @since 4.1.0
+		 *
+		 * @param array $views An array of available views modes.
+		 */
+		$modes = apply_filters( "view_modes_{$this->screen->id}", $this->modes );
+
+		if ( empty( $modes ) )
+			return;
+
 ?>
 		<input type="hidden" name="mode" value="<?php echo esc_attr( $current_mode ); ?>" />
 		<div class="view-switch">
 <?php
-			foreach ( $this->modes as $mode => $title ) {
+			foreach ( $modes as $mode => $title ) {
 				$classes = array( 'view-' . $mode );
 				if ( $current_mode == $mode )
 					$classes[] = 'current';
