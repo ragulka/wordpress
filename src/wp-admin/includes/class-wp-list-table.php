@@ -549,8 +549,9 @@ class WP_List_Table {
 		 */
 		$modes = apply_filters( "view_modes_{$this->screen->id}", $this->modes );
 
-		if ( empty( $modes ) )
+		if ( empty( $modes ) ) {
 			return;
+		}
 
 ?>
 		<input type="hidden" name="mode" value="<?php echo esc_attr( $current_mode ); ?>" />
